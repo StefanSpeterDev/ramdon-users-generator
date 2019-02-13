@@ -11,7 +11,7 @@ loadDataForPage(page);
 function loadDataForPage(page) {
   $('#app-spinner').css('display', 'block');
   
-  // Call API
+  // Appeler l'API qui va nous donner les randoms users (ici 10)
   $.getJSON( "https://randomuser.me/api/?page=" + page + "&results=10", function(apiResult) {
     $('#app-table-body').append('<tr style="display: none"></tr>');
     data = [];
@@ -31,7 +31,7 @@ function loadDataForPage(page) {
 }
 
 
-// Build line in table with api result
+// Construction du tableau ligne par ligne avec les résultats de l'API
 function addTableLine(oneData) {
   var imgUrl = oneData.picture.large;
   var name = oneData.name.first + ' ' + oneData.name.last;   
@@ -44,7 +44,7 @@ function addTableLine(oneData) {
     '</tr>');
 }
 
-
+// Page précédente
 function backPage() {
   if (page && page > 1 && !loadingData) {
     loadingData = true;
@@ -54,7 +54,7 @@ function backPage() {
   }
 }
 
-
+// Page suivante
 function forwardPage() {
   if (!loadingData) {
     loadingData = true;
@@ -63,18 +63,11 @@ function forwardPage() {
     loadDataForPage(page);
   }
 }
-
-
+// Compteur de pages
 function changePage(add) {
   page = add ? page + 1 : page - 1;
   $('#app-span-page').text('Page : ' + page);
 }
-
-
-// ******************************************************************************* //
-// Dialog modal (problem on firefox)
-// On firefox you need to set to true the pramater dom.dialog_element.enabled
-// Where ? juste tape "about:config" in you url bar on firefox
 
 var dialog = document.querySelector('#dialog');
 var showDialogButton = document.querySelector('.dialog-button');
@@ -82,7 +75,7 @@ var showDialogButton = document.querySelector('.dialog-button');
 if (! dialog.showModal) {
   dialogPolyfill.registerDialog(dialog);
 }
-
+// Détails de l'user lorsque l'on clique sur sa ligne dans le tableau
 function showDialog(imgUrl, name) {
   document.querySelector("div.app-user-image > img").src = imgUrl;
   $(".app-dialog-name").text(name);
@@ -93,5 +86,3 @@ dialog.querySelector('.close').addEventListener('click', function() {
   dialog.close();
 });
 
-// ******************************************************************************* //
-// ******************************************************************************* //
